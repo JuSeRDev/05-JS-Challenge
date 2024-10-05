@@ -1,4 +1,3 @@
-const form = document.querySelector(".container-form")
 const inputName = document.querySelector(".name")
 const inputLastName = document.querySelector(".last-name")
 const inputEmail = document.querySelector(".email")
@@ -24,7 +23,10 @@ const inputs = [inputName, inputLastName, inputEmail, inputPassword]
 const errors = [errorName, errorLastName, errorEmail, errorPassword]
 const errorImgs = [errorImgName, errorImgLastName, errorImgEmail, errorImgPassword]
 
-
+const validateEmail = (email) => {
+    const validate = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return validate.test(email);
+}
 
 
 inputSubmit.addEventListener("click",(e)=>{
@@ -38,7 +40,6 @@ inputSubmit.addEventListener("click",(e)=>{
             errorImgs[i].style.opacity = "1"
             errorImgs[i].style.visibility = "visible"
             formValid = false
-            e.preventDefault()
         } else{
             errors[i].style.height = "0"
             errors[i].style.opacity = "0"
@@ -46,7 +47,26 @@ inputSubmit.addEventListener("click",(e)=>{
             errorImgs[i].style.opacity = "1"
             errorImgs[i].style.visibility = "hidden"
         }
-    });
+    })
+
+    if (!validateEmail(inputEmail.value)) {
+        errorEmail.style.height = "auto";
+        errorEmail.style.opacity = "1";
+        errorEmail.style.visibility = "visible";
+        errorImgEmail.style.opacity = "1";
+        errorImgEmail.style.visibility = "visible";
+        formValid = false;
+    } else {
+        errorEmail.style.height = "0";
+        errorEmail.style.opacity = "0";
+        errorEmail.style.visibility = "hidden";
+        errorImgEmail.style.opacity = "0";
+        errorImgEmail.style.visibility = "hidden";
+    }
+
+    if (!formValid) {
+        e.preventDefault();
+    }
     
 })
 
